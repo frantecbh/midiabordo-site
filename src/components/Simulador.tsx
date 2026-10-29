@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { brl, PLANOS, type CodigoPlanoSite } from "@/lib/config";
+import { brl, maxComercios, MENOR_ANUNCIO_SEG, PLANOS, type CodigoPlanoSite } from "@/lib/config";
 
 export function calcularGanhos(clientes: number, valorPorCliente: number, mensalidade: number) {
   const bruto = Math.max(0, clientes) * Math.max(0, valorPorCliente);
@@ -13,6 +13,14 @@ export default function Simulador() {
   const [valor, setValor] = useState(80);
   const [codigo, setCodigo] = useState<CodigoPlanoSite>("essencial");
   const plano = PLANOS.find((p) => p.codigo === codigo) ?? PLANOS[0];
+  const maximo = maxComercios(plano);
+
+  // Ao trocar de plano, a barrinha não pode ficar acima do que o plano comporta.
+  function escolherPlano(c: CodigoPlanoSite) {
+    setCodigo(c);
+    const p = PLANOS.find((x) => x.codigo === c) ?? PLANOS[0];
+    setClientes((n) => Math.min(n, maxComercios(p)));
+  }
   const { bruto, liquido } = calcularGanhos(clientes, valor, plano.mensal);
 
   return (
@@ -27,7 +35,7 @@ export default function Simulador() {
                 codigo === p.codigo ? "border-asfalto bg-asfalto text-giz" : "border-[#CFC8B8] text-asfalto hover:border-asfalto"
               }`}
             >
-              <input type="radio" name="plano" value={p.codigo} checked={codigo === p.codigo} onChange={() => setCodigo(p.codigo)} className="sr-only" />
+              <input type="radio" name="plano" value={p.codigo} checked={codigo === p.codigo} onChange={() => escolherPlano(p.codigo)} className="sr-only" />
               {p.nome}
               <span className={`block text-xs font-normal ${codigo === p.codigo ? "text-cinza" : "text-ardosia"}`}>{brl(p.mensal)}</span>
             </label>
@@ -42,12 +50,20 @@ export default function Simulador() {
         id="sim-clientes"
         type="range"
         min={1}
-        max={20}
+        max={maximo}
         step={1}
         value={clientes}
         onChange={(e) => setClientes(Number(e.target.value))}
-        className="mt-3.5 mb-7 h-7 w-full"
+        className="mt-3.5 h-7 w-full"
       />
+      <p className="mt-1 mb-7 flex justify-between text-xs text-ardosia">
+        <span>1</span>
+        <span>
+          {plano.maxAnuncios === null
+            ? `até ${maximo} (artes de ${MENOR_ANUNCIO_SEG} s no ciclo de ${plano.cicloSeg / 60} min)`
+            : `máximo do ${plano.nome}: ${maximo}`}
+        </span>
+      </p>
 
       <label htmlFor="sim-valor" className="block text-base font-semibold">
         Quanto cada um paga por mês (R$)
@@ -81,8 +97,8 @@ export default function Simulador() {
 
       <p className="mt-3.5 text-[13px] text-ardosia">
         Simulação com os valores que você digitou. O preço de cada anúncio é você quem combina com o comerciante.
-        {codigo === "essencial" && clientes > 10 && " No Essencial cabem até 10 anúncios no ar."}
-        {codigo === "profissional" && clientes > 15 && " No Profissional cabem até 15 anúncios no ar."}
+        {plano.maxAnuncios !== null && clientes === maximo && ` No ${plano.nome} cabem até ${maximo} anúncios no ar; para mais, veja o Ilimitado.`}
+        {plano.maxAnuncios === null && " No Ilimitado não há limite de quantidade: o que limita é o tempo do ciclo de 8 minutos."}
       </p>
     </div>
   );

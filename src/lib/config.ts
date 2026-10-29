@@ -14,6 +14,8 @@ export const PLANOS = [
     nome: "Essencial",
     mensal: 29.9,
     anual: 299,
+    maxAnuncios: 10,
+    cicloSeg: 5 * 60,
     itens: ["Só anúncios estáticos (imagem)", "Até 10 anúncios no ar", "Ciclo de até 5 minutos"],
   },
   {
@@ -21,6 +23,8 @@ export const PLANOS = [
     nome: "Profissional",
     mensal: 39.9,
     anual: 399,
+    maxAnuncios: 15,
+    cicloSeg: 5 * 60,
     itens: ["Anúncios estáticos e em vídeo", "Até 15 anúncios no ar", "Ciclo de até 5 minutos"],
     destaque: true,
   },
@@ -29,9 +33,19 @@ export const PLANOS = [
     nome: "Ilimitado",
     mensal: 59.9,
     anual: 599,
+    maxAnuncios: null,
+    cicloSeg: 8 * 60,
     itens: ["Anúncios estáticos e em vídeo", "Anúncios ilimitados no ar", "Ciclo de até 8 minutos"],
   },
 ] as const;
+
+/** Menor anúncio possível (arte de 15 s): define quantos cabem no ciclo de um plano sem limite de quantidade. */
+export const MENOR_ANUNCIO_SEG = 15;
+
+/** Quantos comércios cabem no ar ao mesmo tempo no plano (no Ilimitado, quem limita é o tempo do ciclo). */
+export function maxComercios(p: { maxAnuncios: number | null; cicloSeg: number }): number {
+  return p.maxAnuncios ?? Math.floor(p.cicloSeg / MENOR_ANUNCIO_SEG);
+}
 
 export type CodigoPlanoSite = (typeof PLANOS)[number]["codigo"];
 
