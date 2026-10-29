@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { brl, maxComercios, MENOR_ANUNCIO_SEG, PLANOS, type CodigoPlanoSite } from "@/lib/config";
+import { brl, maxComercios, MENOR_ANUNCIO_SEG, PLANOS, PRECOS_SUGERIDOS, type CodigoPlanoSite } from "@/lib/config";
 
 export function calcularGanhos(clientes: number, valorPorCliente: number, mensalidade: number) {
   const bruto = Math.max(0, clientes) * Math.max(0, valorPorCliente);
@@ -10,7 +10,7 @@ export function calcularGanhos(clientes: number, valorPorCliente: number, mensal
 
 export default function Simulador() {
   const [clientes, setClientes] = useState(5);
-  const [valor, setValor] = useState(80);
+  const [valor, setValor] = useState(90);
   const [codigo, setCodigo] = useState<CodigoPlanoSite>("essencial");
   const plano = PLANOS.find((p) => p.codigo === codigo) ?? PLANOS[0];
   const maximo = maxComercios(plano);
@@ -78,6 +78,22 @@ export default function Simulador() {
         onChange={(e) => setValor(Math.max(0, Number(e.target.value) || 0))}
         className="mt-2.5 w-full rounded-xl border-[1.5px] border-[#CFC8B8] bg-giz-2 px-4 py-3.5 text-xl font-semibold text-asfalto"
       />
+      <p className="mt-3 text-[13px] text-ardosia">Preços sugeridos por mês (toque para usar):</p>
+      <div className="mt-1.5 flex flex-wrap gap-2">
+        {PRECOS_SUGERIDOS.filter((p) => codigo !== "essencial" || !p.video).map((p) => (
+          <button
+            key={p.rotulo}
+            type="button"
+            onClick={() => setValor(p.valor)}
+            aria-pressed={valor === p.valor}
+            className={`min-h-11 rounded-full border-[1.5px] px-3.5 py-2 text-sm font-semibold ${
+              valor === p.valor ? "border-asfalto bg-asfalto text-giz" : "border-[#CFC8B8] text-asfalto hover:border-asfalto"
+            }`}
+          >
+            {p.rotulo} · {brl(p.valor).replace(",00", "")}
+          </button>
+        ))}
+      </div>
 
       <div className="mt-7 grid grid-cols-2 gap-4 border-t border-dashed border-[#CFC8B8] pt-6">
         <div>

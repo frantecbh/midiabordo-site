@@ -202,8 +202,9 @@ export default function Home() {
             <h3 className="text-2xl font-semibold">Anúncio estático</h3>
             <p className="mt-2 text-cinza">A arte do cliente na tela, com QR code opcional para ele medir o retorno.</p>
             <div className="mt-6 flex flex-wrap gap-2.5">
+              <span className="rounded-full border-[1.5px] border-sinal px-4 py-2 font-bold text-sinal">Pacote 10 segundos</span>
               <span className="rounded-full border-[1.5px] border-sinal px-4 py-2 font-bold text-sinal">Pacote 15 segundos</span>
-              <span className="rounded-full border-[1.5px] border-sinal px-4 py-2 font-bold text-sinal">Pacote 30 segundos</span>
+              <span className="rounded-full border-[1.5px] border-linha-forte px-4 py-2 font-bold text-giz">Dose dupla</span>
             </div>
           </div>
           <div className="rounded-3xl border border-linha bg-cartao p-8">
@@ -211,6 +212,7 @@ export default function Home() {
             <p className="mt-2 text-cinza">O vídeo do cliente, sempre sem som e com legenda, para não incomodar o passageiro.</p>
             <div className="mt-6 flex flex-wrap gap-2.5">
               <span className="rounded-full border-[1.5px] border-sinal px-4 py-2 font-bold text-sinal">De 30 a 60 segundos</span>
+              <span className="rounded-full border-[1.5px] border-linha-forte px-4 py-2 font-bold text-giz">Dose dupla</span>
             </div>
           </div>
         </div>

@@ -39,8 +39,16 @@ export const PLANOS = [
   },
 ] as const;
 
-/** Menor anúncio possível (arte de 15 s): define quantos cabem no ciclo de um plano sem limite de quantidade. */
-export const MENOR_ANUNCIO_SEG = 15;
+/** Menor anúncio possível (arte de 10 s): define quantos cabem no ciclo de um plano sem limite de quantidade. */
+export const MENOR_ANUNCIO_SEG = 10;
+
+/** Preços sugeridos por carro, por mês (mesma tabela padrão da plataforma: src/domain/precos.ts). */
+export const PRECOS_SUGERIDOS = [
+  { rotulo: "Estático 10 s", valor: 70, video: false },
+  { rotulo: "Estático 15 s", valor: 90, video: false },
+  { rotulo: "Vídeo 30 s", valor: 150, video: true },
+  { rotulo: "Vídeo 60 s", valor: 250, video: true },
+] as const;
 
 /** Quantos comércios cabem no ar ao mesmo tempo no plano (no Ilimitado, quem limita é o tempo do ciclo). */
 export function maxComercios(p: { maxAnuncios: number | null; cicloSeg: number }): number {
