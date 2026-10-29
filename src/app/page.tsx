@@ -1,6 +1,7 @@
+import Planos from "@/components/Planos";
 import Simulador from "@/components/Simulador";
 import { BotaoPrimario, Logo, Rotulo, TituloSecao } from "@/components/ui";
-import { brl, CADASTRO_URL, DIAS_TESTE, LOGIN_URL, MENOR_MENSALIDADE, PLANOS, TELA_MINIMA_POLEGADAS } from "@/lib/config";
+import { brl, CADASTRO_URL, DIAS_TESTE, LOGIN_URL, MENOR_MENSALIDADE, TELA_MINIMA_POLEGADAS } from "@/lib/config";
 
 const passos = [
   {
@@ -229,50 +230,10 @@ export default function Home() {
           <Rotulo>Planos</Rotulo>
           <TituloSecao>Comece grátis. Pague só se valer a pena.</TituloSecao>
           <p className="mt-4 max-w-2xl text-lg text-cinza">
-            Nos {DIAS_TESTE} dias grátis você usa tudo do plano Ilimitado. Depois escolhe o que faz sentido para o seu carro.
-            No anual, você paga 10 meses e leva 12.
+            Escolha o plano agora e teste {DIAS_TESTE} dias grátis com tudo liberado. A primeira cobrança só acontece depois do
+            teste, e no anual você paga 10 meses e leva 12.
           </p>
-          <div className="mt-12 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5">
-            {PLANOS.map((p) => {
-              const destaque = "destaque" in p && p.destaque;
-              return (
-                <div
-                  key={p.codigo}
-                  className={`flex flex-col rounded-3xl p-8 ${destaque ? "bg-sinal text-asfalto" : "border border-linha bg-cartao"}`}
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <h3 className="text-[22px] font-semibold">{p.nome}</h3>
-                    {destaque && <span className="rounded-full bg-asfalto px-3 py-1.5 text-[13px] font-bold text-sinal">Mais escolhido</span>}
-                  </div>
-                  <p className="mt-5 font-display text-[48px] leading-none font-extrabold">
-                    {brl(p.mensal)}
-                    <span className={`font-sans text-[17px] font-medium ${destaque ? "text-[#3D3420]" : "text-cinza-2"}`}> /mês</span>
-                  </p>
-                  <p className={`mt-2 text-sm ${destaque ? "text-[#3D3420]" : "text-cinza-2"}`}>
-                    ou {brl(p.anual).replace(",00", "")}/ano: sai por {brl(p.anual / 12)} ao mês
-                  </p>
-                  <ul className={`mt-6 mb-8 list-none space-y-2 p-0 ${destaque ? "text-[#2a2410]" : "text-cinza"}`}>
-                    {p.itens.map((i) => (
-                      <li key={i} className="flex gap-2">
-                        <span aria-hidden="true" className={destaque ? "text-asfalto" : "text-sinal"}>
-                          ✓
-                        </span>
-                        {i}
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href={`${CADASTRO_URL}?plano=${p.codigo}`}
-                    className={`mt-auto rounded-2xl p-4 text-center font-bold ${
-                      destaque ? "bg-asfalto text-giz hover:bg-[#232B35]" : "border-[1.5px] border-linha-forte text-giz hover:border-cinza-2"
-                    }`}
-                  >
-                    Testar {DIAS_TESTE} dias grátis
-                  </a>
-                </div>
-              );
-            })}
-          </div>
+          <Planos />
         </div>
       </section>
 
