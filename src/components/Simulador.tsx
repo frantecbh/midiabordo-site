@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { brl, PLANOS } from "@/lib/config";
+import { brl, PLANOS, type CodigoPlanoSite } from "@/lib/config";
 
-export function calcularGanhos(clientes: number, valorPorCliente: number, mensalidade = PLANOS.mensal.valor) {
+export function calcularGanhos(clientes: number, valorPorCliente: number, mensalidade: number) {
   const bruto = Math.max(0, clientes) * Math.max(0, valorPorCliente);
   return { bruto, liquido: bruto - mensalidade };
 }
@@ -11,11 +11,31 @@ export function calcularGanhos(clientes: number, valorPorCliente: number, mensal
 export default function Simulador() {
   const [clientes, setClientes] = useState(5);
   const [valor, setValor] = useState(80);
-  const { bruto, liquido } = calcularGanhos(clientes, valor);
+  const [codigo, setCodigo] = useState<CodigoPlanoSite>("essencial");
+  const plano = PLANOS.find((p) => p.codigo === codigo) ?? PLANOS[0];
+  const { bruto, liquido } = calcularGanhos(clientes, valor, plano.mensal);
 
   return (
     <div className="min-w-0 flex-[1_1_460px] rounded-3xl border border-areia bg-white p-8">
-      <label htmlFor="sim-clientes" className="flex justify-between text-base font-semibold">
+      <fieldset>
+        <legend className="text-base font-semibold">Seu plano</legend>
+        <div className="mt-2.5 grid grid-cols-3 gap-2">
+          {PLANOS.map((p) => (
+            <label
+              key={p.codigo}
+              className={`cursor-pointer rounded-xl border-[1.5px] px-2 py-2.5 text-center text-sm font-semibold ${
+                codigo === p.codigo ? "border-asfalto bg-asfalto text-giz" : "border-[#CFC8B8] text-asfalto hover:border-asfalto"
+              }`}
+            >
+              <input type="radio" name="plano" value={p.codigo} checked={codigo === p.codigo} onChange={() => setCodigo(p.codigo)} className="sr-only" />
+              {p.nome}
+              <span className={`block text-xs font-normal ${codigo === p.codigo ? "text-cinza" : "text-ardosia"}`}>{brl(p.mensal)}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <label htmlFor="sim-clientes" className="mt-7 flex justify-between text-base font-semibold">
         Comércios anunciando <span className="font-extrabold">{clientes}</span>
       </label>
       <input
@@ -49,8 +69,8 @@ export default function Simulador() {
           <p className="mt-1 text-2xl font-bold">{brl(bruto)}</p>
         </div>
         <div>
-          <p className="text-sm text-ardosia">Mensalidade MidiaAbordo</p>
-          <p className="mt-1 text-2xl font-bold">− {brl(PLANOS.mensal.valor)}</p>
+          <p className="text-sm text-ardosia">Plano {plano.nome}</p>
+          <p className="mt-1 text-2xl font-bold">− {brl(plano.mensal)}</p>
         </div>
       </div>
 
@@ -61,6 +81,8 @@ export default function Simulador() {
 
       <p className="mt-3.5 text-[13px] text-ardosia">
         Simulação com os valores que você digitou. O preço de cada anúncio é você quem combina com o comerciante.
+        {codigo === "essencial" && clientes > 10 && " No Essencial cabem até 10 anúncios no ar."}
+        {codigo === "profissional" && clientes > 15 && " No Profissional cabem até 15 anúncios no ar."}
       </p>
     </div>
   );

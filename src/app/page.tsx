@@ -1,6 +1,6 @@
 import Simulador from "@/components/Simulador";
 import { BotaoPrimario, Logo, Rotulo, TituloSecao } from "@/components/ui";
-import { brl, CADASTRO_URL, LOGIN_URL, PLANOS, TELA_MINIMA_POLEGADAS } from "@/lib/config";
+import { brl, CADASTRO_URL, DIAS_TESTE, LOGIN_URL, MENOR_MENSALIDADE, PLANOS, TELA_MINIMA_POLEGADAS } from "@/lib/config";
 
 const passos = [
   {
@@ -42,7 +42,7 @@ const duvidas = [
   },
   {
     p: "Quem recebe o dinheiro dos anúncios?",
-    r: "Você. O comerciante paga direto para você, por Pix, dinheiro ou do jeito que vocês combinarem. A MidiaAbordo não fica com nenhuma parte; você paga só a mensalidade.",
+    r: "Você. O comerciante paga direto para você, por Pix, dinheiro ou do jeito que vocês combinarem. A MidiaAbordo não fica com nenhuma parte; você paga só a mensalidade do seu plano.",
   },
   {
     p: "O anúncio vai incomodar o passageiro?",
@@ -57,12 +57,15 @@ const duvidas = [
     r: "Não. Propaganda política e eleitoral é proibida em carro de aplicativo, e conteúdo adulto, apostas, armas e cigarro também ficam de fora.",
   },
   {
+    p: "Qual a diferença entre os planos?",
+    r: "O Essencial é só para anúncios em imagem, com até 10 no ar. O Profissional libera vídeo e até 15 anúncios. O Ilimitado não tem limite de anúncios e o carrossel pode ter até 8 minutos. Você pode mudar de plano quando quiser.",
+  },
+  {
     p: "O que acontece se eu atrasar a mensalidade?",
     r: "Você tem alguns dias de carência com avisos. Depois disso a tela para de exibir até o pagamento ser confirmado, e volta na hora.",
   },
 ];
 
-const anualPorMes = PLANOS.anual.valor / 12;
 
 export default function Home() {
   return (
@@ -85,7 +88,7 @@ export default function Home() {
           <a href="#duvidas" className="text-cinza hover:text-giz">Dúvidas</a>
           <a href={LOGIN_URL} className="text-cinza hover:text-giz">Entrar</a>
           <a href={CADASTRO_URL} className="rounded-full bg-sinal px-5 py-3 font-bold text-asfalto hover:bg-sinal-claro">
-            Testar {PLANOS.diasTeste} dias grátis
+            Testar {DIAS_TESTE} dias grátis
           </a>
         </nav>
       </header>
@@ -113,7 +116,7 @@ export default function Home() {
             </a>
           </div>
           <p className="mt-4.5 text-sm text-cinza-2">
-            {PLANOS.diasTeste} dias grátis · depois {brl(PLANOS.mensal.valor)}/mês · cancele quando quiser
+            {DIAS_TESTE} dias grátis com tudo liberado · planos a partir de {brl(MENOR_MENSALIDADE)}/mês · cancele quando quiser
           </p>
         </div>
 
@@ -225,36 +228,50 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6 py-24">
           <Rotulo>Planos</Rotulo>
           <TituloSecao>Comece grátis. Pague só se valer a pena.</TituloSecao>
-          <div className="mt-12 grid max-w-[880px] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-5">
-            <div className="flex flex-col rounded-3xl border border-linha bg-cartao p-9">
-              <h3 className="text-[22px] font-semibold">Mensal</h3>
-              <p className="mt-5 font-display text-[52px] leading-none font-extrabold">
-                {brl(PLANOS.mensal.valor)}
-                <span className="font-sans text-[17px] font-medium text-cinza-2"> /mês</span>
-              </p>
-              <p className="mt-4 mb-7 text-cinza">Cobrança mensal no cartão ou Pix. Sem fidelidade.</p>
-              <a href={CADASTRO_URL} className="mt-auto rounded-2xl border-[1.5px] border-linha-forte p-4 text-center font-bold text-giz hover:border-cinza-2">
-                Testar {PLANOS.diasTeste} dias grátis
-              </a>
-            </div>
-            <div className="flex flex-col rounded-3xl bg-sinal p-9 text-asfalto">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3 className="text-[22px] font-semibold">Anual</h3>
-                <span className="rounded-full bg-asfalto px-3 py-1.5 text-[13px] font-bold text-sinal">
-                  Pague {PLANOS.anual.mesesCobrados}, leve 12
-                </span>
-              </div>
-              <p className="mt-5 font-display text-[52px] leading-none font-extrabold">
-                {brl(PLANOS.anual.valor).replace(",00", "")}
-                <span className="font-sans text-[17px] font-medium text-[#3D3420]"> /ano</span>
-              </p>
-              <p className="mt-4 mb-7 text-[#3D3420]">
-                Sai por {brl(anualPorMes)} ao mês. À vista no Pix ou em até 12x no cartão.
-              </p>
-              <a href={`${CADASTRO_URL}?plano=anual`} className="mt-auto rounded-2xl bg-asfalto p-4 text-center font-bold text-giz hover:bg-[#232B35]">
-                Começar com 2 meses grátis
-              </a>
-            </div>
+          <p className="mt-4 max-w-2xl text-lg text-cinza">
+            Nos {DIAS_TESTE} dias grátis você usa tudo do plano Ilimitado. Depois escolhe o que faz sentido para o seu carro.
+            No anual, você paga 10 meses e leva 12.
+          </p>
+          <div className="mt-12 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5">
+            {PLANOS.map((p) => {
+              const destaque = "destaque" in p && p.destaque;
+              return (
+                <div
+                  key={p.codigo}
+                  className={`flex flex-col rounded-3xl p-8 ${destaque ? "bg-sinal text-asfalto" : "border border-linha bg-cartao"}`}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <h3 className="text-[22px] font-semibold">{p.nome}</h3>
+                    {destaque && <span className="rounded-full bg-asfalto px-3 py-1.5 text-[13px] font-bold text-sinal">Mais escolhido</span>}
+                  </div>
+                  <p className="mt-5 font-display text-[48px] leading-none font-extrabold">
+                    {brl(p.mensal)}
+                    <span className={`font-sans text-[17px] font-medium ${destaque ? "text-[#3D3420]" : "text-cinza-2"}`}> /mês</span>
+                  </p>
+                  <p className={`mt-2 text-sm ${destaque ? "text-[#3D3420]" : "text-cinza-2"}`}>
+                    ou {brl(p.anual).replace(",00", "")}/ano: sai por {brl(p.anual / 12)} ao mês
+                  </p>
+                  <ul className={`mt-6 mb-8 list-none space-y-2 p-0 ${destaque ? "text-[#2a2410]" : "text-cinza"}`}>
+                    {p.itens.map((i) => (
+                      <li key={i} className="flex gap-2">
+                        <span aria-hidden="true" className={destaque ? "text-asfalto" : "text-sinal"}>
+                          ✓
+                        </span>
+                        {i}
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href={`${CADASTRO_URL}?plano=${p.codigo}`}
+                    className={`mt-auto rounded-2xl p-4 text-center font-bold ${
+                      destaque ? "bg-asfalto text-giz hover:bg-[#232B35]" : "border-[1.5px] border-linha-forte text-giz hover:border-cinza-2"
+                    }`}
+                  >
+                    Testar {DIAS_TESTE} dias grátis
+                  </a>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -280,11 +297,11 @@ export default function Home() {
             Seu carro já roda a cidade inteira. <span className="text-sinal">Agora ele também anuncia.</span>
           </h2>
           <p className="mt-5 text-[19px] text-cinza">
-            Crie sua conta e libere seus {PLANOS.diasTeste} dias grátis. Sem cartão para começar.
+            Crie sua conta e libere seus {DIAS_TESTE} dias grátis. Sem cartão para começar.
           </p>
         </div>
         <BotaoPrimario href={CADASTRO_URL} className="px-9 py-5 text-xl">
-          Quero meus {PLANOS.diasTeste} dias grátis
+          Quero meus {DIAS_TESTE} dias grátis
         </BotaoPrimario>
       </section>
 
