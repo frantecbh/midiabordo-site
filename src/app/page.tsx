@@ -1,4 +1,5 @@
 import Planos from "@/components/Planos";
+import SeletorPublico from "@/components/SeletorPublico";
 import Simulador from "@/components/Simulador";
 import { BotaoPrimario, Logo, Rotulo, TituloSecao } from "@/components/ui";
 import { brl, CADASTRO_URL, DIAS_TESTE, LOGIN_URL, MENOR_MENSALIDADE, TELA_MINIMA_POLEGADAS } from "@/lib/config";
@@ -71,6 +72,7 @@ const duvidas = [
 export default function Home() {
   return (
     <main className="min-h-screen text-[17px] leading-relaxed">
+      <SeletorPublico ativo="motorista" />
       {/* Cabeçalho */}
       <header className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5">
         <a href="#topo" className="flex items-center gap-2.5 text-giz no-underline" aria-label="MidiaAbordo, início">

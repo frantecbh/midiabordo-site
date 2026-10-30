@@ -64,3 +64,6 @@ export const TELA_MINIMA_POLEGADAS = "8,7";
 export function brl(valor: number): string {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
+
+/** Formulário "Quero anunciar" do /anuncie: grava no admin da plataforma. */
+export const INTERESSADOS_URL = `${APP_URL}/api/interessados`;
