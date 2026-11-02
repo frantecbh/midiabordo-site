@@ -95,7 +95,7 @@ export default function FormInteressado() {
         disabled={estado === "enviando"}
         className="rounded-2xl bg-sinal px-7 py-4 text-lg font-bold text-asfalto hover:bg-sinal-claro disabled:opacity-60 sm:col-span-2 sm:justify-self-start"
       >
-        {estado === "enviando" ? "Enviando…" : "Quero anunciar no meu bairro"}
+        {estado === "enviando" ? "Enviando…" : "Quero anunciar na tela do carro"}
       </button>
     </form>
   );

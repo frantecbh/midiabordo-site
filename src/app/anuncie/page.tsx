@@ -77,7 +77,7 @@ export default function Anuncie() {
                 Ver quanto meu anúncio roda
               </a>
               <a href="#quero-anunciar" className="rounded-2xl border-2 border-asfalto px-6 py-3.5 text-[17px] font-bold text-asfalto hover:bg-white">
-                Quero anunciar no meu bairro
+                Quero anunciar na tela do carro
               </a>
             </div>
           </div>
