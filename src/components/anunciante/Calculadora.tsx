@@ -35,7 +35,9 @@ export default function Calculadora() {
   const segTela = exibicoes * f.seg;
   const pessoas = horasRua * CORRIDAS_POR_HORA * PASSAGEIROS_POR_CORRIDA;
   const km = horasRua * KM_POR_HORA;
-  const preco = f.valor * (dose ? DOSE_DUPLA : 1) * carros;
+  // 1º mês pelo preço de entrada (mínimo); depois, o sugerido.
+  const preco = f.minimo * (dose ? DOSE_DUPLA : 1) * carros;
+  const depois = f.valor * (dose ? DOSE_DUPLA : 1) * carros;
   const tempoTela = `${Math.floor(segTela / 3600)}h${String(Math.round((segTela % 3600) / 60)).padStart(2, "0")}`;
 
   useEffect(() => {
@@ -153,11 +155,12 @@ export default function Calculadora() {
           </p>
           <div className="flex flex-wrap items-end justify-between gap-3 border-t border-dashed border-linha-forte pt-5">
             <div>
-              <p className="text-sm text-cinza-2">Investimento sugerido</p>
+              <p className="text-sm text-cinza-2">Investimento no 1º mês</p>
               <p className="font-display text-4xl font-extrabold">
                 {brl(preco)}
-                <span className="text-base font-semibold text-cinza-2"> /mês</span>
+                <span className="text-base font-semibold text-cinza-2"> no 1º mês</span>
               </p>
+              <p className="text-sm text-cinza-2">depois, a partir de {brl(depois)}/mês</p>
             </div>
             <div className="text-right text-[15px] text-cinza">
               <p>{brl(preco / 30, 2)} por dia</p>
@@ -188,7 +191,7 @@ export default function Calculadora() {
       </div>
       <p className="mt-3.5 text-[13px] text-ardosia">
         Estimativa com ciclo de 5 minutos, cerca de {CORRIDAS_POR_HORA} corridas por hora, 1,3 passageiro por corrida, corridas de 18 minutos e {KM_POR_HORA} km/h de
-        média na cidade. Preço sugerido pela MidiaAbordo; o valor final você combina com o motorista. O número real de cada mês chega no relatório.
+        média na cidade. 1º mês pelo preço de entrada e, depois, o preço sugerido pela MidiaAbordo; o valor final você combina com o motorista. O número real de cada mês chega no relatório.
       </p>
     </>
   );

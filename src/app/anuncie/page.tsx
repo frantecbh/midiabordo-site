@@ -26,7 +26,7 @@ const numeros = [
   { valor: "15–20 min", texto: "de atenção por corrida, sentado" },
   { valor: "3 a 4 vezes", texto: "o passageiro vê seu anúncio na mesma corrida" },
   { valor: "0 botão de pular", texto: "nada de feed, nada de concorrente ao lado" },
-  { valor: "R$ 3 por dia", texto: "um anúncio de 15 s em um carro, preço sugerido" },
+  { valor: "R$ 50 no 1º mês", texto: "um anúncio de 10 s em um carro: menos de R$ 2 por dia" },
 ];
 
 const motivos = [

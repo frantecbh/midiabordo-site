@@ -42,13 +42,19 @@ export const PLANOS = [
 /** Menor anúncio possível (arte de 10 s): define quantos cabem no ciclo de um plano sem limite de quantidade. */
 export const MENOR_ANUNCIO_SEG = 10;
 
-/** Preços sugeridos por carro, por mês (mesma tabela padrão da plataforma: src/domain/precos.ts). */
+/**
+ * Preços por carro, por mês (mesma tabela padrão da plataforma: src/domain/precos.ts).
+ * `valor` = sugerido; `minimo` = preço de entrada divulgado ao comerciante no 1º mês.
+ */
 export const PRECOS_SUGERIDOS = [
-  { rotulo: "Estático 10 s", valor: 70, video: false },
-  { rotulo: "Estático 15 s", valor: 90, video: false },
-  { rotulo: "Vídeo 30 s", valor: 150, video: true },
-  { rotulo: "Vídeo 60 s", valor: 250, video: true },
+  { rotulo: "Estático 10 s", valor: 70, minimo: 50, video: false },
+  { rotulo: "Estático 15 s", valor: 90, minimo: 70, video: false },
+  { rotulo: "Vídeo 30 s", valor: 150, minimo: 110, video: true },
+  { rotulo: "Vídeo 60 s", valor: 250, minimo: 180, video: true },
 ] as const;
+
+/** Menor preço de entrada (1º mês), para "a partir de R$ X" nos materiais para o comerciante. */
+export const PRIMEIRO_MES_A_PARTIR = Math.min(...PRECOS_SUGERIDOS.map((p) => p.minimo));
 
 /** Quantos comércios cabem no ar ao mesmo tempo no plano (no Ilimitado, quem limita é o tempo do ciclo). */
 export function maxComercios(p: { maxAnuncios: number | null; cicloSeg: number }): number {
