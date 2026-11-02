@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Calculadora from "@/components/anunciante/Calculadora";
 import FormInteressado from "@/components/anunciante/FormInteressado";
+import PlayerDemo from "@/components/anunciante/PlayerDemo";
 import { ProvedorSimulacao } from "@/components/anunciante/Simulacao";
 import SeletorPublico from "@/components/SeletorPublico";
 import { Logo } from "@/components/ui";
@@ -33,6 +34,13 @@ const motivos = [
   { titulo: "Na altura dos olhos", texto: "O tablet fica no encosto do banco da frente, a meio metro do passageiro. É difícil não ver." },
   { titulo: "Na sua cidade", texto: "Motoristas que rodam onde seu cliente mora e trabalha. Propaganda local, de verdade." },
   { titulo: "Resultado medido", texto: "O QR code leva direto ao seu WhatsApp com a mensagem pronta, e cada leitura entra no relatório." },
+];
+
+const proximidade = [
+  { titulo: "Aparece na hora certa", texto: "Quando o carro chega perto da sua loja, o seu anúncio entra na frente dos outros, com a distância na tela." },
+  { titulo: "Mostra o caminho", texto: "O passageiro aponta a câmera para o QR “Rota até lá” e já sai com o trajeto no celular, ou pede uma parada ao motorista." },
+  { titulo: "Só com a loja aberta", texto: "Com o seu horário cadastrado, a tela nunca chama cliente para porta fechada. E mostra “Aberto agora” no anúncio." },
+  { titulo: "Sem exagero", texto: "No máximo uma vez a cada 15 minutos por loja, com uma campainha suave. Ninguém se incomoda; todo mundo repara." },
 ];
 
 const rotulo = "text-sm font-bold tracking-[0.12em] text-ocre uppercase";
@@ -109,6 +117,46 @@ export default function Anuncie() {
                 <p className="text-cinza">{n.texto}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section id="demonstracao" className="scroll-mt-4 bg-giz-2">
+          <div className="mx-auto max-w-6xl px-6 py-20">
+            <p className={rotulo}>Veja funcionando</p>
+            <h2 className={`${titulo} max-w-3xl`}>É isso que o passageiro vê, sentado, a meio metro da tela.</h2>
+            <p className="mt-3 max-w-2xl text-lg text-ardosia">
+              Clínica, barbearia, auto center, restaurante, academia, pet shop: cada um tem a tela inteira na sua vez, com o QR code que leva direto ao
+              WhatsApp.
+            </p>
+            <div className="mt-10 flex flex-wrap items-start gap-10">
+              <div className="min-w-0 flex-[1.5_1_520px]">
+                <PlayerDemo />
+              </div>
+              <div className="min-w-0 flex-[1_1_300px]">
+                <p className="inline-block rounded-full bg-asfalto px-3 py-1 text-xs font-bold tracking-[0.12em] text-sinal uppercase">Novo</p>
+                <h3 className="mt-3 font-display text-[clamp(26px,3vw,36px)] leading-[1.05] font-extrabold tracking-tight">
+                  Anúncio por proximidade: quando o carro passa perto, a sua loja aparece.
+                </h3>
+                <p className="mt-3 text-lg text-ardosia">
+                  O tablet sabe onde o carro está. Quando ele entra no raio que você escolher (300 m, 500 m ou 1 km), o seu anúncio fura a fila e diz ao
+                  passageiro que ele está <strong className="text-asfalto">a poucos metros da sua porta</strong>. É a hora em que ir até você custa menos:
+                  basta pedir uma parada.
+                </p>
+                <p className="mt-3 text-ardosia">Toque no botão embaixo da tela para ver como fica.</p>
+                <p className="mt-4 text-sm text-ardosia">
+                  O trajeto do carro não é guardado nem enviado: o cálculo da distância acontece no próprio tablet. O passageiro não é identificado.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-14 grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-4">
+              {proximidade.map((m) => (
+                <div key={m.titulo} className="rounded-2xl border border-areia bg-white p-6">
+                  <p className="text-lg font-bold">{m.titulo}</p>
+                  <p className="mt-2 text-ardosia">{m.texto}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 

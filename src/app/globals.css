@@ -38,3 +38,31 @@ input[type="range"] {
   outline: 3px solid var(--color-sinal);
   outline-offset: 3px;
 }
+
+/* Demonstração do player na página do anunciante */
+@keyframes demo-barra {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes demo-entra {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes demo-sai {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-30%); opacity: 0.4; }
+}
+@keyframes demo-sino {
+  0% { transform: scale(0.6); opacity: 0; }
+  15% { transform: scale(1.08); opacity: 1; }
+  25%, 85% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0; }
+}
+.demo-barra { animation: demo-barra linear forwards; }
+.demo-entra { animation: demo-entra cubic-bezier(0.22, 1, 0.36, 1) both; }
+.demo-sai { animation: demo-sai ease-in both; }
+.demo-sino { animation: demo-sino 2.2s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .demo-entra, .demo-sai { animation: none; }
+  .demo-sai { display: none; }
+}
