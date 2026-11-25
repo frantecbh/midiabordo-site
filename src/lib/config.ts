@@ -8,8 +8,9 @@ export const LOGIN_URL = `${APP_URL}/login`;
 export const DIAS_TESTE = 14;
 
 /**
- * Planos dos motoristas. Os PREÇOS aqui são só o valor inicial: a página busca os preços atuais na plataforma
- * (APP_URL/api/precos, definidos no Admin) assim que abre, ver src/lib/usePlanos.ts. Anual = pague 10, leve 12.
+ * Planos dos motoristas. Os PREÇOS aqui são só reserva: o build busca os preços atuais na plataforma
+ * (APP_URL/api/precos, definidos no Admin) e a página confere de novo ao abrir (src/lib/usePlanos.tsx).
+ * Salvar preço no Admin republica o site (Deploy Hook). Anual = pague 10, leve 12.
  */
 export const PLANOS = [
   {
