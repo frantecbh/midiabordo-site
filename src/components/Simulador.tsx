@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { brl, maxComercios, MENOR_ANUNCIO_SEG, PLANOS, PRECOS_SUGERIDOS, type CodigoPlanoSite } from "@/lib/config";
+import { brl, maxComercios, MENOR_ANUNCIO_SEG, PRECOS_SUGERIDOS, type CodigoPlanoSite } from "@/lib/config";
+import { usePlanos } from "@/lib/usePlanos";
 
 export function calcularGanhos(clientes: number, valorPorCliente: number, mensalidade: number) {
   const bruto = Math.max(0, clientes) * Math.max(0, valorPorCliente);
@@ -12,6 +13,7 @@ export default function Simulador() {
   const [clientes, setClientes] = useState(5);
   const [valor, setValor] = useState(90);
   const [codigo, setCodigo] = useState<CodigoPlanoSite>("essencial");
+  const PLANOS = usePlanos();
   const plano = PLANOS.find((p) => p.codigo === codigo) ?? PLANOS[0];
   const maximo = maxComercios(plano);
 

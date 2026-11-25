@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { precosNoBuild } from "@/lib/precosBuild";
+import { PrecosIniciais } from "@/lib/usePlanos";
 
 const descricao =
   "Coloque um tablet atrás do banco do passageiro, venda o espaço para os comércios do seu bairro e receba direto no seu Pix. 14 dias grátis.";
@@ -22,7 +24,8 @@ export const viewport: Viewport = {
   themeColor: "#11161c",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const precos = await precosNoBuild();
   return (
     <html lang="pt-BR">
       <head>
@@ -34,7 +37,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap"
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <PrecosIniciais valores={precos}>{children}</PrecosIniciais>
+      </body>
     </html>
   );
 }

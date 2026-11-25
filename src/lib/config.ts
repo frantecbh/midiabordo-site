@@ -7,7 +7,11 @@ export const LOGIN_URL = `${APP_URL}/login`;
 
 export const DIAS_TESTE = 14;
 
-/** Mesmos valores da plataforma (midiabordo-plataforma/src/domain/regras.ts). Anual = pague 10, leve 12. */
+/**
+ * Planos dos motoristas. Os PREÇOS aqui são só reserva: o build busca os preços atuais na plataforma
+ * (APP_URL/api/precos, definidos no Admin) e a página confere de novo ao abrir (src/lib/usePlanos.tsx).
+ * Salvar preço no Admin republica o site (Deploy Hook). Anual = pague 10, leve 12.
+ */
 export const PLANOS = [
   {
     codigo: "essencial",
@@ -49,8 +53,7 @@ export const MENOR_ANUNCIO_SEG = 10;
 export const PRECOS_SUGERIDOS = [
   { rotulo: "Estático 10 s", valor: 70, minimo: 50, video: false },
   { rotulo: "Estático 15 s", valor: 90, minimo: 70, video: false },
-  { rotulo: "Vídeo 30 s", valor: 150, minimo: 110, video: true },
-  { rotulo: "Vídeo 60 s", valor: 250, minimo: 180, video: true },
+  { rotulo: "Vídeo até 30 s", valor: 150, minimo: 110, video: true },
 ] as const;
 
 /** Menor preço de entrada (1º mês), para "a partir de R$ X" nos materiais para o comerciante. */
@@ -64,6 +67,9 @@ export function maxComercios(p: { maxAnuncios: number | null; cicloSeg: number }
 export type CodigoPlanoSite = (typeof PLANOS)[number]["codigo"];
 
 export const MENOR_MENSALIDADE = Math.min(...PLANOS.map((p) => p.mensal));
+
+/** Preços atuais dos planos, servidos pela plataforma. */
+export const PRECOS_URL = `${APP_URL}/api/precos`;
 
 export const TELA_MINIMA_POLEGADAS = "8,7";
 
