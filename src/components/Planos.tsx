@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { brl, CADASTRO_URL, DIAS_TESTE, PLANOS } from "@/lib/config";
+import { brl, CADASTRO_URL, DIAS_TESTE } from "@/lib/config";
+import { usePlanos } from "@/lib/usePlanos";
 
 type Periodo = "mensal" | "anual";
 
 export default function Planos() {
   const [periodo, setPeriodo] = useState<Periodo>("mensal");
+  const planos = usePlanos();
 
   const opcao = (valor: Periodo, rotulo: string, extra?: string) => (
     <label
@@ -31,7 +33,7 @@ export default function Planos() {
       </fieldset>
 
       <div className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5">
-        {PLANOS.map((p) => {
+        {planos.map((p) => {
           const destaque = "destaque" in p && p.destaque;
           const anual = periodo === "anual";
           const sub = destaque ? "text-[#3D3420]" : "text-cinza-2";

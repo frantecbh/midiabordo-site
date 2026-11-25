@@ -175,7 +175,7 @@ export default function PlayerDemo() {
           ))}
         </div>
       </div>
-      <p className="mt-3 text-sm text-ardosia">Demonstração com comércios fictícios. No carro, cada anúncio fica o tempo contratado (10 a 60 s) e o ciclo se repete o dia todo.</p>
+      <p className="mt-3 text-sm text-ardosia">Demonstração com comércios fictícios. No carro, cada anúncio fica o tempo contratado (10 a 30 s) e o ciclo se repete o dia todo.</p>
 
       <button
         type="button"

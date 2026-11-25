@@ -2,7 +2,8 @@ import Planos from "@/components/Planos";
 import SeletorPublico from "@/components/SeletorPublico";
 import Simulador from "@/components/Simulador";
 import { BotaoPrimario, Logo, Rotulo, TituloSecao } from "@/components/ui";
-import { brl, CADASTRO_URL, DIAS_TESTE, LOGIN_URL, MENOR_MENSALIDADE, TELA_MINIMA_POLEGADAS } from "@/lib/config";
+import { CADASTRO_URL, DIAS_TESTE, LOGIN_URL, TELA_MINIMA_POLEGADAS } from "@/lib/config";
+import MenorMensalidade from "@/components/MenorMensalidade";
 
 const passos = [
   {
@@ -119,7 +120,7 @@ export default function Home() {
             </a>
           </div>
           <p className="mt-4.5 text-sm text-cinza-2">
-            {DIAS_TESTE} dias grátis com tudo liberado · planos a partir de {brl(MENOR_MENSALIDADE)}/mês · cancele quando quiser
+            {DIAS_TESTE} dias grátis com tudo liberado · planos a partir de <MenorMensalidade />/mês · cancele quando quiser
           </p>
         </div>
 
@@ -213,7 +214,7 @@ export default function Home() {
             <h3 className="text-2xl font-semibold">Anúncio em vídeo</h3>
             <p className="mt-2 text-cinza">O vídeo do cliente, sempre sem som e com legenda, para não incomodar o passageiro.</p>
             <div className="mt-6 flex flex-wrap gap-2.5">
-              <span className="rounded-full border-[1.5px] border-sinal px-4 py-2 font-bold text-sinal">De 30 a 60 segundos</span>
+              <span className="rounded-full border-[1.5px] border-sinal px-4 py-2 font-bold text-sinal">De 15 a 30 segundos</span>
               <span className="rounded-full border-[1.5px] border-linha-forte px-4 py-2 font-bold text-giz">Dose dupla</span>
             </div>
           </div>
